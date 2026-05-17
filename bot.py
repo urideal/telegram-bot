@@ -5,10 +5,9 @@ import os
 
 API_ID = int(os.environ["API_ID"])
 API_HASH = os.environ["API_HASH"]
-PHONE_NUMBER = os.environ["PHONE_NUMBER"]
 OPENROUTER_KEY = os.environ["OPENROUTER_KEY"]
 
-tg_client = TelegramClient("session", API_ID, API_HASH)
+tg_client = TelegramClient("session.session", API_ID, API_HASH)
 ai_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=OPENROUTER_KEY)
 
 SYSTEM_PROMPT = "Ты помощник-автоответчик. Отвечай кратко. Если не хватает информации — задай уточняющий вопрос."
@@ -31,9 +30,8 @@ async def handler(event):
                 await event.reply(f"Ошибка: {str(e)[:100]}")
 
 async def main():
-    # Пытаемся авторизоваться. Если сессии нет, запросим код в логах.
-    await tg_client.start(phone=PHONE_NUMBER)
-    print("✅ Бот работает!")
+    await tg_client.start()
+    print("✅ Бот работает через готовую сессию!")
     await tg_client.run_until_disconnected()
 
 with tg_client:
