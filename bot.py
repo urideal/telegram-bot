@@ -31,6 +31,7 @@ async def handler(event):
                 await event.reply(f"Ошибка: {str(e)[:100]}")
 
 async def main():
+    # Пытаемся авторизоваться. Если сессии нет, запросим код в логах.
     await tg_client.start(phone=PHONE_NUMBER)
     print("✅ Бот работает!")
     await tg_client.run_until_disconnected()
